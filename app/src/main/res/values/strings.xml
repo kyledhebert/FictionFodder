@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FictionFodder</string>
+    <string name="tag_hint">Add tag</string>
+</resources>
