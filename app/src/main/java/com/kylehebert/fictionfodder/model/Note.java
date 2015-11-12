@@ -9,8 +9,8 @@ import java.util.UUID;
 public class Note {
 
     private UUID mId;
-    private String mBodyText;
-    private boolean isInTrash;
+    private String mTag;
+    private boolean mIsInTrash;
 
     public UUID getId() {
         return mId;
@@ -20,19 +20,19 @@ public class Note {
         this.mId = id;
     }
 
-    public String getBodyText() {
-        return mBodyText;
+    public String getTag() {
+        return mTag;
     }
 
-    public void setBodyText(String bodyText) {
-        mBodyText = bodyText;
+    public void setTag(String tag) {
+        mTag = tag;
     }
 
     public boolean isInTrash() {
-        return isInTrash;
+        return mIsInTrash;
     }
 
     public void setIsInTrash(boolean isInTrash) {
-        this.isInTrash = isInTrash;
+        this.mIsInTrash = isInTrash;
     }
 }

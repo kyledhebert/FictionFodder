@@ -28,8 +28,8 @@ public class NoteList {
         mNotes = new ArrayList<>();
         //generate some test data for debug
         for (int i = 0; i < 100; i++) {
-            Note note = new Note();
-            note.setBodyText("This is a sample note");
+            TextNote note = new TextNote();
+            note.setNoteBody("This is a sample note");
             note.setIsInTrash(i % 2 == 0); //every other one
             mNotes.add(note);
         }
