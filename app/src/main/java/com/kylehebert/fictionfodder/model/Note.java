@@ -12,12 +12,17 @@ public class Note {
     private String mTag;
     private boolean mIsInTrash;
 
-    public UUID getId() {
-        return mId;
+    public Note() {
+        this(UUID.randomUUID());
     }
 
-    public void setId(UUID id) {
-        this.mId = id;
+    public Note(UUID id) {
+        mId = id;
+
+    }
+
+    public UUID getId() {
+        return mId;
     }
 
     public String getTag() {

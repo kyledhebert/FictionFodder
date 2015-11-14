@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.kylehebert.fictionfodder.R;
-import com.kylehebert.fictionfodder.fragment.NoteFragment;
+import com.kylehebert.fictionfodder.fragment.TextNoteFragment;
 
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class NoteActivity extends SingleFragmentActivity {
     @Override
     protected Fragment createFragment() {
         UUID noteId = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID);
-        return NoteFragment.newInstance(noteId);
+        return TextNoteFragment.newInstance(noteId);
     }
 
     @Override

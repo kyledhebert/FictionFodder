@@ -35,6 +35,8 @@ public class NoteListFragment extends Fragment {
     private FloatingActionButton mAddNoteButton;
     private NoteAdapter mNoteAdapter;
 
+    private int mUpdatedNotePosition;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -53,8 +55,15 @@ public class NoteListFragment extends Fragment {
         NoteList noteList = NoteList.get(getActivity());
         List<Note> notes = noteList.getNotes();
 
-        mNoteAdapter = new NoteAdapter(notes);
-        mNoteRecyclerView.setAdapter(mNoteAdapter);
+        if (mNoteAdapter == null) {
+            mNoteAdapter = new NoteAdapter(notes);
+            mNoteRecyclerView.setAdapter(mNoteAdapter);
+        } else {
+            mNoteAdapter.notifyItemChanged(mUpdatedNotePosition);
+            mUpdatedNotePosition = RecyclerView.NO_POSITION;
+        }
+
+
     }
 
     private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -62,6 +71,8 @@ public class NoteListFragment extends Fragment {
         private Note mNote;
         private TextNote mTextNote;
         private ImageNote mImageNote;
+
+        private int mPosition;
 
         private TextView mTitleTextView;
         private TextView mSnippetTextView;
@@ -89,7 +100,8 @@ public class NoteListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
-            Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
+            mUpdatedNotePosition = getAdapterPosition();
+            Intent intent = NoteActivity.newIntent(getActivity(), mTextNote.getId());
             startActivity(intent);
         }
 
