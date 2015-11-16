@@ -1,6 +1,9 @@
 package com.kylehebert.fictionfodder.model;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.kylehebert.fictionfodder.database.NoteDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +17,8 @@ public class NoteList {
 
     private static NoteList sNoteList;
 
-    private List<Note> mNotes;
+    private Context mContext;
+    private SQLiteDatabase mDatabase;
 
     public static NoteList get (Context context) {
         if (sNoteList == null) {
@@ -25,27 +29,16 @@ public class NoteList {
     }
 
     private NoteList(Context context) {
-        mNotes = new ArrayList<>();
-        //generate some test data for debug
-        for (int i = 0; i < 100; i++) {
-            TextNote note = new TextNote();
-            note.setNoteBody("This is a sample note");
-            note.setIsInTrash(i % 2 == 0); //every other one
-            mNotes.add(note);
-        }
+        mContext = context.getApplicationContext();
+        mDatabase = new NoteDatabaseHelper(mContext).getWritableDatabase();
 
     }
 
     public List<Note> getNotes() {
-        return mNotes;
+        return new ArrayList<>();
     }
 
     public Note getNote(UUID id) {
-        for (Note note : mNotes) {
-            if (note.getId().equals(id)) {
-                return note;
-            }
-        }
         return null;
     }
 
