@@ -1,13 +1,17 @@
 package com.kylehebert.fictionfodder.fragment;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,18 +38,41 @@ public class NoteListFragment extends Fragment {
     private RecyclerView mNoteRecyclerView;
     private FloatingActionButton mAddNoteButton;
     private NoteAdapter mNoteAdapter;
+    private Toolbar mAddNoteToolBar;
+    private View mAddNoteToolbarContainer;
 
     private int mUpdatedNotePosition;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_note_list, container, false);
+        view.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom,
+                                       int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                view.removeOnLayoutChangeListener(this);
+                toggleToolbarVisibility(view);
+            }
+        });
+
         mNoteRecyclerView = (RecyclerView) view.findViewById(R.id.item_recycler_view);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mAddNoteButton = (FloatingActionButton) view.findViewById(R.id.add_note_fab);
+        mAddNoteToolBar = (Toolbar) view.findViewById(R.id.select_note_type_toolbar);
+        mAddNoteToolBar.inflateMenu(R.menu.fragment_note_bottom_menu);
 
+
+        mAddNoteButton = (FloatingActionButton) view.findViewById(R.id.add_note_fab);
+        mAddNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toggleToolbarVisibility(view);
+            }
+        });
+
+
+        //used to show new items in the list as they are added, or as existing items are edited
         updateUI();
 
         return view;
@@ -62,7 +89,6 @@ public class NoteListFragment extends Fragment {
             mNoteAdapter.notifyItemChanged(mUpdatedNotePosition);
             mUpdatedNotePosition = RecyclerView.NO_POSITION;
         }
-
 
     }
 
@@ -136,6 +162,47 @@ public class NoteListFragment extends Fragment {
         }
     }
 
+    private void toggleToolbarVisibility(View view) {
 
+        mAddNoteToolbarContainer = view.findViewById(R.id.select_note_type_toolbar);
 
+        //get the center for the clipping circle
+        int cx = (view.getLeft() + view.getRight()) / 2;
+        int cy = (view.getTop() + view.getBottom()) / 2;
+
+        float radius = Math.max(mAddNoteToolbarContainer.getWidth(), mAddNoteToolbarContainer
+                .getHeight());
+
+        if (mAddNoteToolbarContainer.getVisibility() == View.INVISIBLE) {
+            mAddNoteToolbarContainer.setVisibility(View.VISIBLE);
+            mAddNoteButton.setVisibility(View.INVISIBLE);
+
+            ViewAnimationUtils.createCircularReveal(mAddNoteToolbarContainer, cx, cy, 0, radius).start();
+        } else {
+            Animator animator = ViewAnimationUtils.createCircularReveal(mAddNoteToolbarContainer,
+                    cx,cy,radius,0);
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mAddNoteToolbarContainer.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+
+                }
+            });
+            animator.start();
+        }
+    }
 }

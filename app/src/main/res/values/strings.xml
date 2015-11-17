@@ -2,4 +2,7 @@
     <string name="app_name">FictionFodder</string>
     <string name="tag_hint">Add tag</string>
     <string name="delete_note">Delete Note</string>
+    <string name="add_text_note">New Text Note</string>
+    <string name="add_image_note">New Image Note</string>
+
 </resources>

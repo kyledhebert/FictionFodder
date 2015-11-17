@@ -23,5 +23,13 @@
         app:layout_anchorGravity = "bottom|right|end"
         />
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/select_note_type_toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        />
+
 
 </android.support.design.widget.CoordinatorLayout>
