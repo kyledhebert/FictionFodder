@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +44,9 @@ public class NoteListFragment extends Fragment {
 
     private int mUpdatedNotePosition;
 
+    private final static String TYPE_IMAGE_NOTE = "imageNote";
+    private final static String TYPE_TEXT_NOTE = "textNote";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
@@ -61,6 +65,32 @@ public class NoteListFragment extends Fragment {
 
         mAddNoteToolBar = (Toolbar) view.findViewById(R.id.select_note_type_toolbar);
         mAddNoteToolBar.inflateMenu(R.menu.fragment_note_bottom_menu);
+        mAddNoteToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_item_add_text_note:
+                        Note textNote = new Note();
+                        textNote.setType(TYPE_TEXT_NOTE);
+                        NoteList.get(getActivity()).addNote(textNote);
+                        Log.i("NoteListFragment", "textNote type:" + textNote.getType());
+                        Intent textIntent = NoteActivity.newIntent(getActivity(), textNote.getId());
+                        startActivity(textIntent);
+                        return true;
+                    case R.id.menu_item_add_image_note:
+                        Note imageNote = new Note();
+                        imageNote.setType(TYPE_IMAGE_NOTE);
+                        NoteList.get(getActivity()).addNote(imageNote);
+                        Intent imageIntent = NoteActivity.newIntent(getActivity(), imageNote.getId());
+                        startActivity(imageIntent);
+                        return true;
+                    default:
+                        return false;
+
+                }
+
+            }
+        });
 
 
         mAddNoteButton = (FloatingActionButton) view.findViewById(R.id.add_note_fab);

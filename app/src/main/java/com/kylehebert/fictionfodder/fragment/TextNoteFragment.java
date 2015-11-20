@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.kylehebert.fictionfodder.R;
+import com.kylehebert.fictionfodder.model.Note;
 import com.kylehebert.fictionfodder.model.NoteList;
 import com.kylehebert.fictionfodder.model.TextNote;
 
@@ -23,9 +25,14 @@ import java.util.UUID;
  */
 public class TextNoteFragment extends Fragment {
 
+    private static final String TAG = "TextNoteFragment";
+
     private static final String ARG_NOTE_ID = "note_id";
 
 
+
+
+    private Note mNote;
     private TextNote mTextNote;
     private EditText mTagEditText;
     private EditText mTextNoteBodyEditText;
@@ -45,14 +52,32 @@ public class TextNoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-
         UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
-        mTextNote = (TextNote) NoteList.get(getActivity()).getNote(noteId);
+        mTextNote = NoteList.get(getActivity()).getTextNote(noteId);
+        Log.i(TAG,"mTextNote type:" + mTextNote.getType());
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        NoteList.get(getActivity()).updateTextNote(mTextNote);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
+
+        View textNoteView = inflateTextNoteView(inflater,container);
+
+        return textNoteView;
+    }
+
+    public View inflateTextNoteView(LayoutInflater inflater, ViewGroup container) {
+
+
+
         View view = inflater.inflate(R.layout.fragment_text_note, container, false);
 
         mTagEditText = (EditText) view.findViewById(R.id.item_tag_edit_text);
@@ -92,7 +117,6 @@ public class TextNoteFragment extends Fragment {
 
             }
         });
-
 
         return view;
     }

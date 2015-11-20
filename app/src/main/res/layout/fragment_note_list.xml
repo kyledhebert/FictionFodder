@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_note_fab"
         android:layout_width="wrap_content"
@@ -20,15 +21,17 @@
         app:backgroundTint="@android:color/holo_blue_light"
         app:fabSize="normal"
         app:layout_anchor="@id/item_recycler_view"
-        app:layout_anchorGravity = "bottom|right|end"
+        app:layout_anchorGravity="bottom|right|end"
         />
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/select_note_type_toolbar"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
+
         />
 
 

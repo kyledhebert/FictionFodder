@@ -1,5 +1,8 @@
 package com.kylehebert.fictionfodder.model;
 
+import java.util.Date;
+import java.util.UUID;
+
 /**
  * Created by kylehebert on 11/12/15.
  * A model object that represents a plain text note.
@@ -8,6 +11,10 @@ public class TextNote extends Note {
 
     private String mTitle;
     private String mNoteBody;
+
+    public TextNote(UUID uuid) {
+        super(uuid);
+    }
 
 
     public String getTitle() {

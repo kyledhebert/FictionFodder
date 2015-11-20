@@ -21,14 +21,16 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL("create table " + NoteTable.NAME + "(" +
+                "_id integer primary key autoincrement, " +
                 NoteTable.Columns.UUID + ", " +
+                NoteTable.Columns.DATE + ", " +
                 NoteTable.Columns.TYPE + ", " +
+                NoteTable.Columns.TAG + ", " +
+                NoteTable.Columns.TRASH +", " +
                 NoteTable.Columns.TITLE + ", " +
                 NoteTable.Columns.BODY + ", " +
-                NoteTable.Columns.TAG + ", " +
                 NoteTable.Columns.IMG_LOCATION + ", " +
-                NoteTable.Columns.DATE + ", " +
-                NoteTable.Columns.TRASH + ")");
+                NoteTable.Columns.CAPTION + ") ");
 
     }
 
