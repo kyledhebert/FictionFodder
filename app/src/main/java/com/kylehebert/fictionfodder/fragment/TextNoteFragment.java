@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.kylehebert.fictionfodder.R;
+import com.kylehebert.fictionfodder.config.Constants;
 import com.kylehebert.fictionfodder.model.Note;
 import com.kylehebert.fictionfodder.model.NoteList;
 import com.kylehebert.fictionfodder.model.TextNote;
@@ -25,21 +26,14 @@ import java.util.UUID;
  */
 public class TextNoteFragment extends Fragment {
 
-    private static final String TAG = "TextNoteFragment";
 
-    private static final String ARG_NOTE_ID = "note_id";
-
-
-
-
-    private Note mNote;
     private TextNote mTextNote;
     private EditText mTagEditText;
     private EditText mTextNoteBodyEditText;
 
     public static TextNoteFragment newInstance(UUID noteId) {
         Bundle args = new Bundle();
-        args.putSerializable(ARG_NOTE_ID, noteId);
+        args.putSerializable(Constants.ARG_NOTE_ID, noteId);
 
         TextNoteFragment noteFragment = new TextNoteFragment();
         noteFragment.setArguments(args);
@@ -52,9 +46,8 @@ public class TextNoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        UUID noteId = (UUID) getArguments().getSerializable(ARG_NOTE_ID);
+        UUID noteId = (UUID) getArguments().getSerializable(Constants.ARG_NOTE_ID);
         mTextNote = NoteList.get(getActivity()).getTextNote(noteId);
-        Log.i(TAG,"mTextNote type:" + mTextNote.getType());
 
     }
 
@@ -68,15 +61,6 @@ public class TextNoteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
             savedInstanceState) {
-
-        View textNoteView = inflateTextNoteView(inflater,container);
-
-        return textNoteView;
-    }
-
-    public View inflateTextNoteView(LayoutInflater inflater, ViewGroup container) {
-
-
 
         View view = inflater.inflate(R.layout.fragment_text_note, container, false);
 
@@ -119,7 +103,9 @@ public class TextNoteFragment extends Fragment {
         });
 
         return view;
+
     }
+
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
