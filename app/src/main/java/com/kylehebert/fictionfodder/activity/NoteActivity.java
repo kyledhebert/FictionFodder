@@ -9,6 +9,7 @@ import com.kylehebert.fictionfodder.config.Constants;
 import com.kylehebert.fictionfodder.fragment.ImageNoteFragment;
 import com.kylehebert.fictionfodder.fragment.TextNoteFragment;
 import com.kylehebert.fictionfodder.model.Note;
+import com.kylehebert.fictionfodder.model.NoteList;
 
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class NoteActivity extends SingleFragmentActivity {
         UUID noteId = (UUID) getIntent().getSerializableExtra(Constants.EXTRA_NOTE_ID);
 
         //check to see what type of note
-        Note getTypeNote = new Note(noteId);
+        Note getTypeNote = NoteList.get(this).getNote(noteId);
         if (getTypeNote.getType().equals(Constants.TYPE_TEXT_NOTE)) {
             return TextNoteFragment.newInstance(noteId);
         } else {

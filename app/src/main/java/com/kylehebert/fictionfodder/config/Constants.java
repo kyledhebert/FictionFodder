@@ -14,6 +14,9 @@ public class Constants {
 
     public final static String TYPE_TEXT_NOTE = "textNote";
 
+    public static final int REQUEST_IMAGE = 0;
+
+
 
 
 

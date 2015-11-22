@@ -1,5 +1,6 @@
 package com.kylehebert.fictionfodder.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -20,6 +21,7 @@ import com.kylehebert.fictionfodder.R;
 import com.kylehebert.fictionfodder.config.Constants;
 import com.kylehebert.fictionfodder.model.ImageNote;
 import com.kylehebert.fictionfodder.model.NoteList;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.UUID;
@@ -39,7 +41,6 @@ public class ImageNoteFragment extends Fragment{
     private ImageView mImageView;
     private ImageButton mTakePictureButton;
 
-    private static final int REQUEST_IMAGE = 0;
 
     public static ImageNoteFragment newInstance(UUID noteId) {
         Bundle args = new Bundle();
@@ -96,11 +97,14 @@ public class ImageNoteFragment extends Fragment{
 
         PackageManager packageManager = getActivity().getPackageManager();
 
-        mImageView = (ImageView) view.findViewById(R.id.image_image_view);
-
         mTakePictureButton = (ImageButton) view.findViewById(R.id.take_picture_button);
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+
+        /*
+        check to make sure device has camera and permission to use
+        if not disable the camera button
+         */
         boolean canTakePicture = mImageFile != null && captureImage.resolveActivity(packageManager)
                 != null;
         mTakePictureButton.setEnabled(canTakePicture);
@@ -113,11 +117,35 @@ public class ImageNoteFragment extends Fragment{
         mTakePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(captureImage, REQUEST_IMAGE);
+                startActivityForResult(captureImage, Constants.REQUEST_IMAGE);
             }
         });
 
+        mImageView = (ImageView) view.findViewById(R.id.image_image_view);
+        updateImageView();
+
         return view;
+    }
+
+    private void updateImageView() {
+        Uri uri = Uri.fromFile(mImageFile);
+
+        if (mImageFile == null || !mImageFile.exists()) {
+            mImageView.setImageDrawable(null);
+        } else {
+            Picasso.with(getActivity()).load(uri).into(mImageView);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
+            return;
+        }
+
+        if (requestCode == Constants.REQUEST_IMAGE) {
+            updateImageView();
+        }
     }
 
 
