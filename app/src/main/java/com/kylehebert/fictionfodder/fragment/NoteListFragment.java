@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.kylehebert.fictionfodder.R;
 import com.kylehebert.fictionfodder.activity.NoteActivity;
+import com.kylehebert.fictionfodder.config.Constants;
 import com.kylehebert.fictionfodder.model.ImageNote;
 import com.kylehebert.fictionfodder.model.Note;
 import com.kylehebert.fictionfodder.model.NoteList;
@@ -44,8 +45,6 @@ public class NoteListFragment extends Fragment {
 
     private int mUpdatedNotePosition;
 
-    private final static String TYPE_IMAGE_NOTE = "imageNote";
-    private final static String TYPE_TEXT_NOTE = "textNote";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
@@ -71,7 +70,7 @@ public class NoteListFragment extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.menu_item_add_text_note:
                         Note textNote = new Note();
-                        textNote.setType(TYPE_TEXT_NOTE);
+                        textNote.setType(Constants.TYPE_TEXT_NOTE);
                         NoteList.get(getActivity()).addNote(textNote);
                         Log.i("NoteListFragment", "textNote type:" + textNote.getType());
                         Intent textIntent = NoteActivity.newIntent(getActivity(), textNote.getId());
@@ -79,7 +78,7 @@ public class NoteListFragment extends Fragment {
                         return true;
                     case R.id.menu_item_add_image_note:
                         Note imageNote = new Note();
-                        imageNote.setType(TYPE_IMAGE_NOTE);
+                        imageNote.setType(Constants.TYPE_IMAGE_NOTE);
                         NoteList.get(getActivity()).addNote(imageNote);
                         Intent imageIntent = NoteActivity.newIntent(getActivity(), imageNote.getId());
                         startActivity(imageIntent);
@@ -128,7 +127,6 @@ public class NoteListFragment extends Fragment {
         private TextNote mTextNote;
         private ImageNote mImageNote;
 
-        private int mPosition;
 
         private TextView mTitleTextView;
         private TextView mSnippetTextView;
@@ -148,7 +146,7 @@ public class NoteListFragment extends Fragment {
             //TODO figure out what kind of note first
 
             //for now assume all notes are text notes
-            mTextNote = (TextNote)note;
+            mTextNote = new TextNote(note.getId());
             mTitleTextView.setText(mTextNote.getTitle());
             mSnippetTextView.setText(mTextNote.getNoteBody());
 

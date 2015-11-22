@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.Image;
+import android.os.Environment;
 
 import com.kylehebert.fictionfodder.database.NoteCursorWrapper;
 import com.kylehebert.fictionfodder.database.NoteDatabaseHelper;
 import com.kylehebert.fictionfodder.database.NoteDatabaseSchema;
 import com.kylehebert.fictionfodder.database.NoteDatabaseSchema.NoteTable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -129,6 +131,44 @@ public class NoteList {
                 new String[] {uuidString});
     }
 
+    public void updateImageNote(ImageNote imageNote) {
+        String uuidString = imageNote.getId().toString();
+        ContentValues contentValues = getImageNoteValues(imageNote);
+
+        mDatabase.update(NoteTable.NAME, contentValues,
+                NoteTable.Columns.UUID + " =?",
+                new String[] {uuidString});
+    }
+
+    public ImageNote getImageNote(UUID id) {
+        NoteCursorWrapper cursor = queryNotes(
+                NoteTable.Columns.UUID + " = ?",
+                new String[]{id.toString()}
+        );
+
+        try {
+            if (cursor.getCount() == 0) { //empty database
+                return null;
+            }
+
+            cursor.moveToFirst();
+            return  cursor.getImageNote();
+        } finally {
+            cursor.close();
+        }
+    }
+
+
+    public File getPhotoFile(ImageNote imageNote) {
+        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+        if (externalFilesDir == null) {
+            return null;
+        }
+
+        return new File(externalFilesDir, imageNote.getPhotoFilename());
+    }
+
     public void updateNote(Note note) {
         ContentValues contentValues;
         String uuidString = note.getId().toString();
@@ -168,7 +208,6 @@ public class NoteList {
 
     private static ContentValues getImageNoteValues(ImageNote imageNote) {
         ContentValues contentValues = getNoteValues(imageNote);
-        contentValues.put(NoteTable.Columns.IMG_LOCATION, imageNote.getUri().toString());
         contentValues.put(NoteTable.Columns.CAPTION, imageNote.getCaption());
 
         return contentValues;

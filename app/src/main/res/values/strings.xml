@@ -4,5 +4,7 @@
     <string name="delete_note">Delete Note</string>
     <string name="add_text_note">New Text Note</string>
     <string name="add_image_note">New Image Note</string>
+    <string name="caption_label">Caption</string>
+    <string name="caption_hint">Enter a caption for the photo</string>
 
 </resources>

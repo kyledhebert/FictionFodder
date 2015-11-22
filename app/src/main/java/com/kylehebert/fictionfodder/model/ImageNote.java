@@ -11,7 +11,6 @@ import java.util.UUID;
 public class ImageNote extends Note {
 
     private String mCaption;
-    private Uri mUri;
 
     public ImageNote(UUID uuid) {
         super(uuid);
@@ -25,11 +24,7 @@ public class ImageNote extends Note {
         mCaption = caption;
     }
 
-    public Uri getUri() {
-        return mUri;
-    }
-
-    public void setUri(Uri uri) {
-        mUri = uri;
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }

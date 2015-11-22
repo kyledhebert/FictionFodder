@@ -46,6 +46,24 @@ public class NoteCursorWrapper extends CursorWrapper {
         return textNote;
 
     }
+    public ImageNote getImageNote() {
+        String uuidString = getString(getColumnIndex(NoteTable.Columns.UUID));
+        long date = getLong(getColumnIndex(NoteTable.Columns.DATE));
+        String type = getString(getColumnIndex(NoteTable.Columns.TYPE));
+        String tag = getString(getColumnIndex(NoteTable.Columns.TAG));
+        int isInTrash = getInt(getColumnIndex(NoteTable.Columns.TRASH));
+        String caption = getString(getColumnIndex(NoteTable.Columns.CAPTION));
+
+        ImageNote imageNote = new ImageNote(UUID.fromString(uuidString));
+        imageNote.setDate(new Date(date));
+        imageNote.setType(type);
+        imageNote.setTag(tag);
+        imageNote.setIsInTrash(isInTrash != 0);
+        imageNote.setCaption(caption);
+
+        return imageNote;
+
+    }
 
     public Note getNote(){
 
@@ -56,7 +74,6 @@ public class NoteCursorWrapper extends CursorWrapper {
         int isInTrash = getInt(getColumnIndex(NoteTable.Columns.TRASH));
         String title = getString(getColumnIndex(NoteTable.Columns.TITLE));
         String body = getString(getColumnIndex(NoteTable.Columns.BODY));
-        String imageLocation = getString(getColumnIndex(NoteTable.Columns.IMG_LOCATION));
         String caption = getString(getColumnIndex(NoteTable.Columns.CAPTION));
 
         Note note = new Note(UUID.fromString(uuidString));
@@ -65,21 +82,7 @@ public class NoteCursorWrapper extends CursorWrapper {
         note.setTag(tag);
         note.setIsInTrash(isInTrash != 0);
 
-
-
-        //before adding remaining note details determine the type of note
-        if (type.equals(TYPE_TEXT_NOTE)) {
-            TextNote textNote = new TextNote(note.getId());
-            textNote.setTitle(title);
-            textNote.setNoteBody(body);
-            return textNote;
-        } else {
-            ImageNote imageNote = new ImageNote(note.getId());
-            imageNote.setUri(Uri.parse(imageLocation));
-            imageNote.setCaption(caption);
-            return imageNote;
-        }
-
+        return note;
 
     }
 

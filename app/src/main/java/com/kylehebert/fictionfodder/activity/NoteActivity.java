@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.kylehebert.fictionfodder.R;
+import com.kylehebert.fictionfodder.config.Constants;
+import com.kylehebert.fictionfodder.fragment.ImageNoteFragment;
 import com.kylehebert.fictionfodder.fragment.TextNoteFragment;
+import com.kylehebert.fictionfodder.model.Note;
 
 import java.util.UUID;
 
@@ -15,19 +18,26 @@ import java.util.UUID;
  */
 public class NoteActivity extends SingleFragmentActivity {
 
-    private static final String EXTRA_NOTE_ID = "item_id";
-
     public static Intent newIntent(Context packageContext, UUID noteId) {
         Intent intent = new Intent(packageContext, NoteActivity.class);
-        intent.putExtra(EXTRA_NOTE_ID, noteId);
+        intent.putExtra(Constants.EXTRA_NOTE_ID, noteId);
         return intent;
     }
 
 
     @Override
     protected Fragment createFragment() {
-        UUID noteId = (UUID) getIntent().getSerializableExtra(EXTRA_NOTE_ID);
-        return TextNoteFragment.newInstance(noteId);
+        UUID noteId = (UUID) getIntent().getSerializableExtra(Constants.EXTRA_NOTE_ID);
+
+        //check to see what type of note
+        Note getTypeNote = new Note(noteId);
+        if (getTypeNote.getType().equals(Constants.TYPE_TEXT_NOTE)) {
+            return TextNoteFragment.newInstance(noteId);
+        } else {
+            return ImageNoteFragment.newInstance(noteId);
+        }
+
+
     }
 
     @Override
