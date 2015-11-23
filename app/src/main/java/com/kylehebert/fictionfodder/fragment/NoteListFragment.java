@@ -48,6 +48,7 @@ public class NoteListFragment extends Fragment {
     private View mAddNoteToolbarContainer;
 
     private int mUpdatedNotePosition;
+    private int mDeletedNotePosition;
 
 
     @Override
@@ -131,6 +132,15 @@ public class NoteListFragment extends Fragment {
             mNoteAdapter = new NoteAdapter(notes);
             mNoteRecyclerView.setAdapter(mNoteAdapter);
         } else {
+
+            //need to check if note is in trash
+
+            //if so notifyItemDeleted
+            mNoteAdapter.notifyItemRemoved(mDeletedNotePosition);
+            mDeletedNotePosition = RecyclerView.NO_POSITION;
+
+
+            //else notifyItemChanged
             mNoteAdapter.notifyItemChanged(mUpdatedNotePosition);
             mUpdatedNotePosition = RecyclerView.NO_POSITION;
         }
@@ -161,6 +171,7 @@ public class NoteListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mUpdatedNotePosition = getAdapterPosition();
+            mDeletedNotePosition = getAdapterPosition();
             Intent intent = NoteActivity.newIntent(getActivity(), mNote.getId());
             startActivity(intent);
         }
@@ -227,6 +238,7 @@ public class NoteListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mUpdatedNotePosition = getAdapterPosition();
+            mDeletedNotePosition = getAdapterPosition();
             Intent intent = NoteActivity.newIntent(getActivity(), mImageNote.getId());
             startActivity(intent);
         }
@@ -296,8 +308,8 @@ public class NoteListFragment extends Fragment {
 
                 case Constants.TYPE_IMAGE:
                     ImageNoteHolder imageNoteHolder = (ImageNoteHolder) noteHolder;
-                    Note inote = mNoteList.get(position);
-                    ImageNote imageNote = NoteList.get(getActivity()).getImageNote(inote
+                    Note iNote = mNoteList.get(position);
+                    ImageNote imageNote = NoteList.get(getActivity()).getImageNote(iNote
                             .getId());
                     imageNoteHolder.bindImageNote(imageNote);
                     break;
