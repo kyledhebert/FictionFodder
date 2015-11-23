@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,8 +12,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.kylehebert.fictionfodder.R;
-import com.kylehebert.fictionfodder.config.Constants;
-import com.kylehebert.fictionfodder.model.Note;
+import com.kylehebert.fictionfodder.utility.Constants;
 import com.kylehebert.fictionfodder.model.NoteList;
 import com.kylehebert.fictionfodder.model.TextNote;
 
@@ -92,6 +90,7 @@ public class TextNoteFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mTextNote.setTitle(getTitle(s));
                 mTextNote.setNoteBody(s.toString());
 
             }
@@ -104,6 +103,17 @@ public class TextNoteFragment extends Fragment {
 
         return view;
 
+    }
+
+    /*
+    gets the first line of the note to use as the title
+     */
+    public String getTitle(CharSequence s) {
+        String noteBody = s.toString();
+        String[] noteLines = noteBody.split(System.getProperty("line.separator"));
+        String noteTitle = noteLines[0];
+
+        return noteTitle;
     }
 
 

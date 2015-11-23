@@ -18,7 +18,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_item"
-        app:backgroundTint="@android:color/holo_blue_light"
         app:fabSize="normal"
         app:layout_anchor="@id/item_recycler_view"
         app:layout_anchorGravity="bottom|right|end"

@@ -1,4 +1,4 @@
-package com.kylehebert.fictionfodder.config;
+package com.kylehebert.fictionfodder.utility;
 
 /**
  * Created by kylehebert on 11/21/15.
@@ -15,6 +15,10 @@ public class Constants {
     public final static String TYPE_TEXT_NOTE = "textNote";
 
     public static final int REQUEST_IMAGE = 0;
+
+    public static final int TYPE_TEXT = 0;
+
+    public static final int TYPE_IMAGE = 1;
 
 
 

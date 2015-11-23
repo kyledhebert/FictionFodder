@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kylehebert.fictionfodder.R;
-import com.kylehebert.fictionfodder.config.Constants;
+import com.kylehebert.fictionfodder.utility.Constants;
 import com.kylehebert.fictionfodder.model.ImageNote;
 import com.kylehebert.fictionfodder.model.NoteList;
 import com.squareup.picasso.Picasso;
@@ -133,7 +133,7 @@ public class ImageNoteFragment extends Fragment{
         if (mImageFile == null || !mImageFile.exists()) {
             mImageView.setImageDrawable(null);
         } else {
-            Picasso.with(getActivity()).load(uri).into(mImageView);
+            Picasso.with(getActivity()).load(uri).resize(120,120).centerCrop().into(mImageView);
         }
     }
 

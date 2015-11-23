@@ -17,4 +17,11 @@
         app:showAsAction="ifRoom"
         />
 
+    <item
+        android:id="@+id/menu_item_close_toolbar"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Close"
+        app:showAsAction="ifRoom"
+        />
+
 </menu>
