@@ -169,6 +169,13 @@ public class NoteList {
         return new File(externalFilesDir, imageNote.getPhotoFilename());
     }
 
+    public void deleteNote(Note note) {
+        String uuidString = note.getId().toString();
+        mDatabase.delete(NoteTable.NAME,
+                NoteTable.Columns.UUID + " = ?",
+                new String[] {uuidString});
+    }
+
     public void updateNote(Note note) {
         ContentValues contentValues;
         String uuidString = note.getId().toString();

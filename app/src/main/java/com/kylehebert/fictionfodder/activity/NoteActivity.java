@@ -32,7 +32,7 @@ public class NoteActivity extends SingleFragmentActivity {
 
         //check to see what type of note
         Note getTypeNote = NoteList.get(this).getNote(noteId);
-        if (getTypeNote.getType().equals(Constants.TYPE_TEXT_NOTE)) {
+            if (getTypeNote.getType().equals(Constants.TYPE_TEXT_NOTE)) {
             return TextNoteFragment.newInstance(noteId);
         } else {
             return ImageNoteFragment.newInstance(noteId);
