@@ -10,12 +10,16 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.kylehebert.fictionfodder.R;
 import com.kylehebert.fictionfodder.utility.Constants;
@@ -77,6 +81,7 @@ public class ImageNoteFragment extends Fragment{
         mCaptionLabelTextView = (TextView) view.findViewById(R.id.caption_label_text_view);
 
         mEditCaptionEditText = (EditText) view.findViewById(R.id.caption_edit_text);
+        mEditCaptionEditText.setText(mImageNote.getCaption());
         mEditCaptionEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -147,6 +152,29 @@ public class ImageNoteFragment extends Fragment{
             updateImageView();
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_note, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.menu_item_delete_note:
+                //NoteList.get(getActivity()).deleteNote(mImageNote);
+                //TODO make this a snackbar with undo
+                Toast.makeText(getActivity(), R.string.delete_item_toast, Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+
+        }
+    }
+
+
 
 
 

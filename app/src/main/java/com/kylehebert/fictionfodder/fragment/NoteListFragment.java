@@ -117,6 +117,12 @@ public class NoteListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
         NoteList noteList = NoteList.get(getActivity());
         List<Note> notes = noteList.getNotes();
