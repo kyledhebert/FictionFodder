@@ -16,6 +16,10 @@ public class Constants {
 
     public static final int REQUEST_IMAGE = 0;
 
+    public static final int TYPE_TEXT = 0;
+
+    public static final int TYPE_IMAGE = 1;
+
 
 
 

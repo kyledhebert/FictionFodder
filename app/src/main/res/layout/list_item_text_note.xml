@@ -4,13 +4,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-    <!--<ImageView-->
-        <!--android:id="@+id/photo_note_thumbnail_image_view"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:padding="4dp"-->
-        <!--/>-->
-
     <TextView
         android:id="@+id/note_title_text_view"
         android:layout_width="match_parent"
