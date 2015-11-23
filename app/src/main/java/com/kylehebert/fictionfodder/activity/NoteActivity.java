@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.kylehebert.fictionfodder.R;
-import com.kylehebert.fictionfodder.config.Constants;
+import com.kylehebert.fictionfodder.utility.Constants;
 import com.kylehebert.fictionfodder.fragment.ImageNoteFragment;
 import com.kylehebert.fictionfodder.fragment.TextNoteFragment;
 import com.kylehebert.fictionfodder.model.Note;

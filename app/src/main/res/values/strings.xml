@@ -6,5 +6,7 @@
     <string name="add_image_note">New Image Note</string>
     <string name="caption_label">Caption</string>
     <string name="caption_hint">Enter a caption for the photo</string>
+    <string name="image_note_thumbnail_content_description">A thumbnail of the image for
+        this note</string>
 
 </resources>

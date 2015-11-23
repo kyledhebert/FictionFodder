@@ -20,11 +20,12 @@ import android.widget.TextView;
 
 import com.kylehebert.fictionfodder.R;
 import com.kylehebert.fictionfodder.activity.NoteActivity;
-import com.kylehebert.fictionfodder.config.Constants;
+import com.kylehebert.fictionfodder.utility.Constants;
 import com.kylehebert.fictionfodder.model.ImageNote;
 import com.kylehebert.fictionfodder.model.Note;
 import com.kylehebert.fictionfodder.model.NoteList;
 import com.kylehebert.fictionfodder.model.TextNote;
+import com.kylehebert.fictionfodder.utility.DividerItemDecoration;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -65,6 +66,9 @@ public class NoteListFragment extends Fragment {
         mNoteRecyclerView = (RecyclerView) view.findViewById(R.id.item_recycler_view);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST);
+        mNoteRecyclerView.addItemDecoration(itemDecoration);
+
         mAddNoteToolBar = (Toolbar) view.findViewById(R.id.select_note_type_toolbar);
         mAddNoteToolBar.inflateMenu(R.menu.fragment_note_bottom_menu);
         mAddNoteToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -86,6 +90,9 @@ public class NoteListFragment extends Fragment {
                         Intent imageIntent = NoteActivity.newIntent(getActivity(), imageNote.getId());
                         startActivity(imageIntent);
                         return true;
+                    case R.id.menu_item_close_toolbar:
+                        toggleToolbarVisibility(view);
+                        mAddNoteButton.setVisibility(View.VISIBLE);
                     default:
                         return false;
 
@@ -128,7 +135,6 @@ public class NoteListFragment extends Fragment {
 
         private Note mNote;
 
-
         private TextView mTitleTextView;
         private TextView mSnippetTextView;
         private ImageView mImageView;
@@ -139,7 +145,6 @@ public class NoteListFragment extends Fragment {
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.note_title_text_view);
             mSnippetTextView = (TextView) itemView.findViewById(R.id.text_note_snippet_text_view);
-            //mThumbnailView = (ImageView) itemView.findViewById(R.id.photo_note_thumbnail_image_view);
 
         }
 
@@ -198,8 +203,8 @@ public class NoteListFragment extends Fragment {
             super(itemView);
             itemView.setOnClickListener(this);
 
-            mCaptionTextView = (TextView) itemView.findViewById(R.id.caption_text_view);
-            mThumbnailView = (ImageView) itemView.findViewById(R.id.thumbnail_image_view);
+            mCaptionTextView = (TextView) itemView.findViewById(R.id.image_note_caption_text_view);
+            mThumbnailView = (ImageView) itemView.findViewById(R.id.image_note_thumbnail_image_view);
 
         }
 
@@ -210,7 +215,7 @@ public class NoteListFragment extends Fragment {
             File imageFile = NoteList.get(getActivity()).getPhotoFile(mImageNote);
             Uri uri = Uri.fromFile(imageFile);
 
-            Picasso.with(getActivity()).load(uri).into(mThumbnailView);
+            Picasso.with(getActivity()).load(uri).resize(120,120).centerCrop().into(mThumbnailView);
         }
 
         @Override

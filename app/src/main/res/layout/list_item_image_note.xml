@@ -3,21 +3,29 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="16dp"
                 android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/image_note_thumbnail_image_view"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@string/image_note_thumbnail_content_description"
+        />
+
     <TextView
-        android:id="@+id/caption_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/image_note_caption_text_view"
+        android:padding="4dp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@id/image_note_thumbnail_image_view"
+        android:textStyle="bold"
+        android:textSize="20sp"
         tools:text="Image Caption"
         />
 
-    <ImageView
-        android:id="@+id/thumbnail_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/caption_text_view"
-        />
 
 
 </RelativeLayout>

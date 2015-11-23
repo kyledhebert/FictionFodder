@@ -1,4 +1,4 @@
-package com.kylehebert.fictionfodder.config;
+package com.kylehebert.fictionfodder.utility;
 
 /**
  * Created by kylehebert on 11/21/15.
