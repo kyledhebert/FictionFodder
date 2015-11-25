@@ -163,8 +163,8 @@ public class ImageNoteFragment extends Fragment{
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.menu_item_delete_note:
-                //NoteList.get(getActivity()).deleteNote(mImageNote);
-                //TODO make this a snackbar with undo
+                NoteList.get(getActivity()).deleteNote(mImageNote);
+                //TODO make Toast a snackbar with undo
                 Toast.makeText(getActivity(), R.string.delete_item_toast, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
                 return true;
