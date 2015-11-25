@@ -131,8 +131,9 @@ public class TextNoteFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.menu_item_delete_note:
-                //NoteList.get(getActivity()).deleteNote(mTextNote);
-                //TODO make this a snackbar with undo
+                NoteList.get(getActivity()).deleteNote(mTextNote);
+                //TODO make Toast a Snackbar with undo
+                //TODO add deleted notes to the Trash dbtables
                 Toast.makeText(getActivity(), R.string.delete_item_toast, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
                 return true;
