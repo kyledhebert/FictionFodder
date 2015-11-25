@@ -132,15 +132,9 @@ public class NoteListFragment extends Fragment {
             mNoteAdapter = new NoteAdapter(notes);
             mNoteRecyclerView.setAdapter(mNoteAdapter);
         } else {
-
-            //need to check if note is in trash
-
-            //if so notifyItemDeleted
+            mNoteAdapter.setNotes(notes);
             mNoteAdapter.notifyItemRemoved(mDeletedNotePosition);
             mDeletedNotePosition = RecyclerView.NO_POSITION;
-
-
-            //else notifyItemChanged
             mNoteAdapter.notifyItemChanged(mUpdatedNotePosition);
             mUpdatedNotePosition = RecyclerView.NO_POSITION;
         }
@@ -201,6 +195,7 @@ public class NoteListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
+            mDeletedNotePosition = getAdapterPosition();
             mUpdatedNotePosition = getAdapterPosition();
             Intent intent = NoteActivity.newIntent(getActivity(), mTextNote.getId());
             startActivity(intent);
@@ -324,6 +319,13 @@ public class NoteListFragment extends Fragment {
         @Override
         public int getItemCount() {
             return mNoteList.size();
+        }
+
+        /*
+        gets called by updateUI to refresh the fragment's snapshot of the NoteList
+         */
+        public void setNotes(List<Note> noteList) {
+            mNoteList = noteList;
         }
     }
 
