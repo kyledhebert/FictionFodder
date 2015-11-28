@@ -37,8 +37,14 @@ import java.util.List;
 
 public class NoteListFragment extends Fragment {
 
-    public static NoteListFragment newInstance() {
-        return new NoteListFragment();
+    public static NoteListFragment newInstance(int queryType) {
+
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.ARG_QUERY_TYPE, queryType);
+
+        NoteListFragment noteListFragment = new NoteListFragment();
+        noteListFragment.setArguments(args);
+        return noteListFragment;
     }
 
     private RecyclerView mNoteRecyclerView;
@@ -67,11 +73,12 @@ public class NoteListFragment extends Fragment {
         mNoteRecyclerView = (RecyclerView) view.findViewById(R.id.item_recycler_view);
         mNoteRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        //adds a divider between items in the list
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST);
         mNoteRecyclerView.addItemDecoration(itemDecoration);
 
         mAddNoteToolBar = (Toolbar) view.findViewById(R.id.select_note_type_toolbar);
-        mAddNoteToolBar.inflateMenu(R.menu.fragment_note_bottom_menu);
+        mAddNoteToolBar.inflateMenu(R.menu.fragment_note_list_bottom_toolbar);
         mAddNoteToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -126,7 +133,8 @@ public class NoteListFragment extends Fragment {
 
     private void updateUI() {
         NoteList noteList = NoteList.get(getActivity());
-        List<Note> notes = noteList.getNotes();
+        int queryType = getArguments().getInt(Constants.ARG_QUERY_TYPE);
+        List<Note> notes = noteList.getNotes(queryType);
 
         if (mNoteAdapter == null) {
             mNoteAdapter = new NoteAdapter(notes);

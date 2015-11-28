@@ -11,6 +11,7 @@ import com.kylehebert.fictionfodder.database.NoteCursorWrapper;
 import com.kylehebert.fictionfodder.database.NoteDatabaseHelper;
 import com.kylehebert.fictionfodder.database.NoteDatabaseSchema;
 import com.kylehebert.fictionfodder.database.NoteDatabaseSchema.NoteTable;
+import com.kylehebert.fictionfodder.utility.Constants;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -66,10 +67,32 @@ public class NoteList {
         mDatabase.insert(NoteTable.NAME, null, contentValues);
     }
 
-    public List<Note> getNotes() {
+    public List<Note> getNotes(int queryType) {
         List<Note> noteList = new ArrayList<>();
+        NoteCursorWrapper cursor;
 
-        NoteCursorWrapper cursor = queryNotes(null, null);
+        switch (queryType) {
+            case Constants.QUERY_ALL_NOTES:
+                cursor = queryNotes(null, null);
+                break;
+            case Constants.QUERY_TEXT_NOTES:
+                cursor = queryNotes(NoteTable.Columns.TYPE + " = ?", new String[] {Constants
+                        .TYPE_TEXT_NOTE});
+                break;
+            case Constants.QUERY_IMAGE_NOTES:
+                cursor = queryNotes(NoteTable.Columns.TYPE + " = ?", new String[] {Constants
+                        .TYPE_IMAGE_NOTE});
+                break;
+//            case Constants.QUERY_TRASH_NOTES:
+//                // there is no trash query at the moment
+//                break;
+            default:
+                cursor = queryNotes(NoteTable.Columns.TYPE + " = ?", new String[] {Constants
+                        .TYPE_TEXT_NOTE});
+
+        }
+
+
 
         try {
             cursor.moveToFirst();
