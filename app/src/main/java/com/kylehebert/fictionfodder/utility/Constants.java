@@ -6,9 +6,11 @@ package com.kylehebert.fictionfodder.utility;
  */
 public class Constants {
 
-    public static final String EXTRA_NOTE_ID = "item_id";
+    public static final String EXTRA_NOTE_ID = "com.kylehebert.fictionfodder.item_id";
 
-    public static final String ARG_NOTE_ID = "note_id";
+    public static final String ARG_NOTE_ID = "com.kylehebert.fictionfodder.note_id";
+
+    public static final String ARG_QUERY_TYPE = "com.kylehebert.fictionfodder.query_type";
 
     public final static String TYPE_IMAGE_NOTE = "imageNote";
 
@@ -16,9 +18,20 @@ public class Constants {
 
     public static final int REQUEST_IMAGE = 0;
 
+    // used for determining which view type to load
     public static final int TYPE_TEXT = 0;
 
     public static final int TYPE_IMAGE = 1;
+
+    //used to determine which type of list to load/query to make
+    public static final int QUERY_ALL_NOTES = 0;
+
+    public static final int QUERY_TEXT_NOTES = 1;
+
+    public static final int QUERY_IMAGE_NOTES = 2;
+
+    public static final int QUERY_TRASH_NOTES = 3;
+
 
 
 
