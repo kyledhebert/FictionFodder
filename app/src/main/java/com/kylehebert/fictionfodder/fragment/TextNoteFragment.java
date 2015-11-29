@@ -3,6 +3,8 @@ package com.kylehebert.fictionfodder.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -31,6 +33,7 @@ public class TextNoteFragment extends Fragment {
     private TextNote mTextNote;
     private EditText mTagEditText;
     private EditText mTextNoteBodyEditText;
+    private Toolbar mToolbar;
 
     public static TextNoteFragment newInstance(UUID noteId) {
         Bundle args = new Bundle();
@@ -64,6 +67,12 @@ public class TextNoteFragment extends Fragment {
             savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_text_note, container, false);
+
+        // replace the action bar with the support toolbar
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+        appCompatActivity.setSupportActionBar(mToolbar);
+
 
         mTagEditText = (EditText) view.findViewById(R.id.item_tag_edit_text);
         mTagEditText.setText(mTextNote.getTag());
@@ -123,13 +132,18 @@ public class TextNoteFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_note, menu);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.menu_item_save_note:
+                NoteList.get(getActivity()).updateTextNote(mTextNote);
+                Toast.makeText(getActivity(), R.string.save_item_toast, Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+                return true;
             case R.id.menu_item_delete_note:
                 NoteList.get(getActivity()).deleteNote(mTextNote);
                 //TODO make Toast a Snackbar with undo

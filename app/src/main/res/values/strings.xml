@@ -2,12 +2,14 @@
     <string name="app_name">FictionFodder</string>
     <string name="tag_hint">Add tag</string>
     <string name="delete_note">Delete Note</string>
+    <string name="save_note">Save Note</string>
     <string name="add_text_note">New Text Note</string>
     <string name="add_image_note">New Image Note</string>
     <string name="caption_label">Caption</string>
     <string name="caption_hint">Enter a caption for the photo</string>
     <string name="image_note_thumbnail_content_description">A thumbnail of the image for
         this note</string>
+    <string name="save_item_toast">Note saved</string>
     <string name="delete_item_toast">Note deleted</string>
 
     <!-- Navigation Drawer String -->

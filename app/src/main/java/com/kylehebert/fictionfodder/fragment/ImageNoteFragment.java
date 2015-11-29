@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -44,6 +46,7 @@ public class ImageNoteFragment extends Fragment{
     private EditText mEditCaptionEditText;
     private ImageView mImageView;
     private ImageButton mTakePictureButton;
+    private Toolbar mToolbar;
 
 
     public static ImageNoteFragment newInstance(UUID noteId) {
@@ -77,6 +80,11 @@ public class ImageNoteFragment extends Fragment{
             savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_image_note, container, false);
+
+        // replace the action bar with the support toolbar
+        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+
 
         mCaptionLabelTextView = (TextView) view.findViewById(R.id.caption_label_text_view);
 
@@ -155,13 +163,16 @@ public class ImageNoteFragment extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_note, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.menu_item_save_note:
+                NoteList.get(getActivity()).updateImageNote(mImageNote);
+                Toast.makeText(getActivity(), R.string.save_item_toast, Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.menu_item_delete_note:
                 NoteList.get(getActivity()).deleteNote(mImageNote);
                 //TODO make Toast a snackbar with undo
