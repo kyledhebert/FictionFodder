@@ -119,7 +119,7 @@ public class NoteListFragment extends Fragment {
         });
 
 
-        //used to show new items in the list as they are added, or as existing items are edited
+        // displays the initial list of notes in the NoteList on creation
         updateUI();
 
         return view;
@@ -131,6 +131,10 @@ public class NoteListFragment extends Fragment {
         updateUI();
     }
 
+    /*
+    used to display the initial list of notes during onCreate, and also
+    observes the lists for changes and deletions
+     */
     private void updateUI() {
         NoteList noteList = NoteList.get(getActivity());
         int queryType = getArguments().getInt(Constants.ARG_QUERY_TYPE);
@@ -337,6 +341,8 @@ public class NoteListFragment extends Fragment {
         }
     }
 
+    // allow the FAB to toggle the visibility of the add note toolbar
+    //TODO requires min SDK of 21, figure out how to support min of 15
     private void toggleToolbarVisibility(View view) {
 
         mAddNoteToolbarContainer = view.findViewById(R.id.select_note_type_toolbar);

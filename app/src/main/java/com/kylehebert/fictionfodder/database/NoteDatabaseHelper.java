@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.kylehebert.fictionfodder.database.NoteDatabaseSchema.NoteTable;
 
+import static com.kylehebert.fictionfodder.database.NoteDatabaseSchema.*;
+
 /**
  * Created by kylehebert on 11/14/15.
  */
@@ -21,6 +23,18 @@ public class NoteDatabaseHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase database) {
         database.execSQL("create table " + NoteTable.NAME + "(" +
+                "_id integer primary key autoincrement, " +
+                NoteTable.Columns.UUID + ", " +
+                NoteTable.Columns.DATE + ", " +
+                NoteTable.Columns.TYPE + ", " +
+                NoteTable.Columns.TAG + ", " +
+                NoteTable.Columns.TRASH +", " +
+                NoteTable.Columns.TITLE + ", " +
+                NoteTable.Columns.BODY + ", " +
+                NoteTable.Columns.IMG_LOCATION + ", " +
+                NoteTable.Columns.CAPTION + ") ");
+
+        database.execSQL("create table " + TrashTable.NAME + "(" +
                 "_id integer primary key autoincrement, " +
                 NoteTable.Columns.UUID + ", " +
                 NoteTable.Columns.DATE + ", " +

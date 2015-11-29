@@ -18,9 +18,6 @@ import java.util.UUID;
  */
 public class NoteCursorWrapper extends CursorWrapper {
 
-    private final static String TYPE_IMAGE_NOTE = "imageNote";
-    private final static String TYPE_TEXT_NOTE = "textNote";
-
 
     public NoteCursorWrapper(Cursor cursor) {
         super(cursor);
@@ -72,9 +69,6 @@ public class NoteCursorWrapper extends CursorWrapper {
         String type = getString(getColumnIndex(NoteTable.Columns.TYPE));
         String tag = getString(getColumnIndex(NoteTable.Columns.TAG));
         int isInTrash = getInt(getColumnIndex(NoteTable.Columns.TRASH));
-        String title = getString(getColumnIndex(NoteTable.Columns.TITLE));
-        String body = getString(getColumnIndex(NoteTable.Columns.BODY));
-        String caption = getString(getColumnIndex(NoteTable.Columns.CAPTION));
 
         Note note = new Note(UUID.fromString(uuidString));
         note.setDate(new Date(date));

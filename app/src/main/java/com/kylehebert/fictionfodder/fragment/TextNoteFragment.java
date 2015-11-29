@@ -145,9 +145,9 @@ public class TextNoteFragment extends Fragment {
                 getActivity().finish();
                 return true;
             case R.id.menu_item_delete_note:
-                NoteList.get(getActivity()).deleteNote(mTextNote);
                 //TODO make Toast a Snackbar with undo
-                //TODO add deleted notes to the Trash dbtables
+                NoteList.get(getActivity()).addTextNoteToTrash(mTextNote);
+                NoteList.get(getActivity()).deleteNote(mTextNote);
                 Toast.makeText(getActivity(), R.string.delete_item_toast, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
                 return true;
