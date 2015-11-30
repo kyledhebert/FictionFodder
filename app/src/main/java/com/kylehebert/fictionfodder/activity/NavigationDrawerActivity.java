@@ -14,6 +14,7 @@ import android.view.MenuItem;
 
 import com.kylehebert.fictionfodder.R;
 import com.kylehebert.fictionfodder.fragment.NoteListFragment;
+import com.kylehebert.fictionfodder.fragment.TrashNoteListFragment;
 import com.kylehebert.fictionfodder.utility.Constants;
 
 /**
@@ -82,34 +83,24 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private void selectDrawerItem(MenuItem item) {
         // create a new NoteList Fragment based on the item selected
 
-        Fragment fragment = null;
-
-        NoteListFragment noteListFragment;
+        Fragment fragment;
 
         switch (item.getItemId()) {
             case R.id.navigation_all_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES);
                 break;
             case R.id.navigation_text_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_TEXT_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_TEXT_NOTES);
                 break;
             case R.id.navigation_image_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_IMAGE_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_IMAGE_NOTES);
                 break;
             case R.id.navigation_trash_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_TRASH_NOTES);
+                fragment = TrashNoteListFragment.newInstance();
                 break;
             default:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES);
 
-
-
-        }
-
-        try {
-            fragment = noteListFragment;
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         // insert the new fragment and replace any existing fragment

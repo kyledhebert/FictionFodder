@@ -2,9 +2,7 @@ package com.kylehebert.fictionfodder.database;
 
 import android.database.Cursor;
 import android.database.CursorWrapper;
-import android.net.Uri;
 
-import com.kylehebert.fictionfodder.database.NoteDatabaseSchema.NoteTable;
 import com.kylehebert.fictionfodder.model.ImageNote;
 import com.kylehebert.fictionfodder.model.Note;
 import com.kylehebert.fictionfodder.model.TextNote;
@@ -24,13 +22,13 @@ public class NoteCursorWrapper extends CursorWrapper {
     }
 
     public TextNote getTextNote() {
-        String uuidString = getString(getColumnIndex(NoteTable.Columns.UUID));
-        long date = getLong(getColumnIndex(NoteTable.Columns.DATE));
-        String type = getString(getColumnIndex(NoteTable.Columns.TYPE));
-        String tag = getString(getColumnIndex(NoteTable.Columns.TAG));
-        int isInTrash = getInt(getColumnIndex(NoteTable.Columns.TRASH));
-        String title = getString(getColumnIndex(NoteTable.Columns.TITLE));
-        String body = getString(getColumnIndex(NoteTable.Columns.BODY));
+        String uuidString = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.UUID));
+        long date = getLong(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.DATE));
+        String type = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TYPE));
+        String tag = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TAG));
+        int isInTrash = getInt(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TRASH));
+        String title = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TITLE));
+        String body = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.BODY));
 
         TextNote textNote = new TextNote(UUID.fromString(uuidString));
         textNote.setDate(new Date(date));
@@ -44,12 +42,12 @@ public class NoteCursorWrapper extends CursorWrapper {
 
     }
     public ImageNote getImageNote() {
-        String uuidString = getString(getColumnIndex(NoteTable.Columns.UUID));
-        long date = getLong(getColumnIndex(NoteTable.Columns.DATE));
-        String type = getString(getColumnIndex(NoteTable.Columns.TYPE));
-        String tag = getString(getColumnIndex(NoteTable.Columns.TAG));
-        int isInTrash = getInt(getColumnIndex(NoteTable.Columns.TRASH));
-        String caption = getString(getColumnIndex(NoteTable.Columns.CAPTION));
+        String uuidString = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.UUID));
+        long date = getLong(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.DATE));
+        String type = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TYPE));
+        String tag = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TAG));
+        int isInTrash = getInt(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TRASH));
+        String caption = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.CAPTION));
 
         ImageNote imageNote = new ImageNote(UUID.fromString(uuidString));
         imageNote.setDate(new Date(date));
@@ -64,11 +62,11 @@ public class NoteCursorWrapper extends CursorWrapper {
 
     public Note getNote(){
 
-        String uuidString = getString(getColumnIndex(NoteTable.Columns.UUID));
-        long date = getLong(getColumnIndex(NoteTable.Columns.DATE));
-        String type = getString(getColumnIndex(NoteTable.Columns.TYPE));
-        String tag = getString(getColumnIndex(NoteTable.Columns.TAG));
-        int isInTrash = getInt(getColumnIndex(NoteTable.Columns.TRASH));
+        String uuidString = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.UUID));
+        long date = getLong(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.DATE));
+        String type = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TYPE));
+        String tag = getString(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TAG));
+        int isInTrash = getInt(getColumnIndex(NoteDatabaseSchema.TrashTable.Columns.TRASH));
 
         Note note = new Note(UUID.fromString(uuidString));
         note.setDate(new Date(date));

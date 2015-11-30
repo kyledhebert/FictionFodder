@@ -83,9 +83,6 @@ public class NoteList {
                 cursor = queryNotes(NoteTable.Columns.TYPE + " = ?", new String[] {Constants
                         .TYPE_IMAGE_NOTE});
                 break;
-//            case Constants.QUERY_TRASH_NOTES:
-//                // there is no trash query at the moment
-//                break;
             default:
                 cursor = queryNotes(NoteTable.Columns.TYPE + " = ?", new String[] {Constants
                         .TYPE_TEXT_NOTE});
@@ -199,6 +196,11 @@ public class NoteList {
                 new String[] {uuidString});
     }
 
+    /*
+    had to split updateNote into two methods -- one for each type of note
+    it seems like the cursor gets lost after the if/else block
+    TODO look into maintaining cursor inside of if/else blocks
+     */
     public void updateNote(Note note) {
         ContentValues contentValues;
         String uuidString = note.getId().toString();
