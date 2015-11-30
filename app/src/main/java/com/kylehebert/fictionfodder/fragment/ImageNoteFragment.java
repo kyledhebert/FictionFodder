@@ -66,21 +66,10 @@ public class ImageNoteFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         UUID noteId = (UUID) getArguments().getSerializable(Constants.ARG_NOTE_ID);
-
-        //determine which activity called the fragment
-        Activity callingActivity = getActivity();
-
-        //if called by Note Activity
-        if (callingActivity.equals(NoteActivity.class)) {
-            mImageNote = NoteList.get(getActivity()).getImageNote(noteId);
-            mImageFile = NoteList.get(getActivity()).getPhotoFile(mImageNote);
-        //if called by Trash Note Activity
-        } else {
-            mImageNote = TrashNoteList.get(getActivity()).getImageNote(noteId);
-            mImageFile = TrashNoteList.get(getActivity()).getPhotoFile(mImageNote);
-        }
-
+        mImageNote = NoteList.get(getActivity()).getImageNote(noteId);
+        mImageFile = NoteList.get(getActivity()).getPhotoFile(mImageNote);
     }
 
     @Override

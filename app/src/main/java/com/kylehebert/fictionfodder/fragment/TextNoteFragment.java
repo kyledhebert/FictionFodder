@@ -55,19 +55,7 @@ public class TextNoteFragment extends Fragment {
         setHasOptionsMenu(true);
 
         UUID noteId = (UUID) getArguments().getSerializable(Constants.ARG_NOTE_ID);
-
-        //determine which activity called the fragment
-        Activity callingActivity = getActivity();
-
-
-        //if called by Note Activity
-        if (callingActivity.equals(NoteActivity.class)) {
-
-            mTextNote = NoteList.get(getActivity()).getTextNote(noteId);
-        //if called by Trash Note Activity
-        } else {
-            mTextNote = TrashNoteList.get(getActivity()).getTextNote(noteId);
-        }
+        mTextNote = NoteList.get(getActivity()).getTextNote(noteId);
     }
 
     @Override
