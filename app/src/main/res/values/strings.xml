@@ -22,7 +22,7 @@
 
     <string name="drawer_open">Open Navigation Menu</string>
     <string name="drawer_close">Close Navigation Menu</string>
-
+    <string name="search_notes">Search Notes</string>
 
 
 </resources>

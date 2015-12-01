@@ -37,15 +37,17 @@ import java.util.List;
 
 public class NoteListFragment extends Fragment {
 
-    public static NoteListFragment newInstance(int queryType) {
+    public static NoteListFragment newInstance(int queryType, String searchTerm) {
 
         Bundle args = new Bundle();
         args.putSerializable(Constants.ARG_QUERY_TYPE, queryType);
+        args.putSerializable(Constants.ARG_SEARCH_TERM, searchTerm);
 
         NoteListFragment noteListFragment = new NoteListFragment();
         noteListFragment.setArguments(args);
         return noteListFragment;
     }
+
 
     private RecyclerView mNoteRecyclerView;
     private FloatingActionButton mAddNoteButton;
@@ -119,7 +121,10 @@ public class NoteListFragment extends Fragment {
         });
 
 
-        // displays the initial list of notes in the NoteList on creation
+        /*
+        displays the initial list of notes in the NoteList on creation
+        and also reloads the note list based on navigation selection
+        */
         updateUI();
 
         return view;
@@ -136,9 +141,22 @@ public class NoteListFragment extends Fragment {
     observes the lists for changes and deletions
      */
     private void updateUI() {
+
         NoteList noteList = NoteList.get(getActivity());
+        /*
+        queryType determines the type of notes that are pulled from the database
+        and displayed in the list
+        */
         int queryType = getArguments().getInt(Constants.ARG_QUERY_TYPE);
-        List<Note> notes = noteList.getNotes(queryType);
+        String searchTerm = getArguments().getString(Constants.ARG_SEARCH_TERM);
+
+        List<Note> notes;
+
+        if (searchTerm != null) {
+            notes = noteList.getNotes(searchTerm);
+        } else {
+            notes = noteList.getNotes(queryType);
+        }
 
         if (mNoteAdapter == null) {
             mNoteAdapter = new NoteAdapter(notes);
@@ -151,6 +169,24 @@ public class NoteListFragment extends Fragment {
             mUpdatedNotePosition = RecyclerView.NO_POSITION;
         }
 
+    }
+
+    private void displaySearchResults(String searchTerm) {
+        NoteList noteList = NoteList.get(getActivity());
+
+        List<Note> notes = noteList.getNotes(searchTerm);
+
+        if (mNoteAdapter == null) {
+            mNoteAdapter = new NoteAdapter(notes);
+            mNoteRecyclerView.setAdapter(mNoteAdapter);
+        } else {
+            mNoteAdapter.setNotes(notes);
+            mNoteAdapter.notifyItemRemoved(mDeletedNotePosition);
+            mDeletedNotePosition = RecyclerView.NO_POSITION;
+            mNoteAdapter.notifyItemChanged(mUpdatedNotePosition);
+            mUpdatedNotePosition = RecyclerView.NO_POSITION;
+
+        }
     }
 
     private class NoteHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

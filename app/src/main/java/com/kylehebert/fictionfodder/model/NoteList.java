@@ -67,6 +67,28 @@ public class NoteList {
         mDatabase.insert(NoteTable.NAME, null, contentValues);
     }
 
+    //used when searching via the search view
+    public List<Note> getNotes(String searchTerm) {
+        List<Note> noteList = new ArrayList<>();
+        NoteCursorWrapper cursor;
+
+        cursor = queryNotes(NoteTable.Columns.BODY + " LIKE ?",
+                new String[] {"%" + searchTerm + "%"});
+
+        try {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                noteList.add(cursor.getNote());
+                cursor.moveToNext();
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return noteList;
+
+    }
+
     public List<Note> getNotes(int queryType) {
         List<Note> noteList = new ArrayList<>();
         NoteCursorWrapper cursor;
