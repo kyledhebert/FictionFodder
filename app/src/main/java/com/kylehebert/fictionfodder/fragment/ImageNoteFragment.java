@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kylehebert.fictionfodder.R;
+import com.kylehebert.fictionfodder.activity.NoteActivity;
+import com.kylehebert.fictionfodder.model.TrashNoteList;
 import com.kylehebert.fictionfodder.utility.Constants;
 import com.kylehebert.fictionfodder.model.ImageNote;
 import com.kylehebert.fictionfodder.model.NoteList;
@@ -49,6 +51,7 @@ public class ImageNoteFragment extends Fragment{
     private Toolbar mToolbar;
 
 
+
     public static ImageNoteFragment newInstance(UUID noteId) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.ARG_NOTE_ID, noteId);
@@ -63,6 +66,7 @@ public class ImageNoteFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         UUID noteId = (UUID) getArguments().getSerializable(Constants.ARG_NOTE_ID);
         mImageNote = NoteList.get(getActivity()).getImageNote(noteId);
         mImageFile = NoteList.get(getActivity()).getPhotoFile(mImageNote);
@@ -172,8 +176,11 @@ public class ImageNoteFragment extends Fragment{
             case R.id.menu_item_save_note:
                 NoteList.get(getActivity()).updateImageNote(mImageNote);
                 Toast.makeText(getActivity(), R.string.save_item_toast, Toast.LENGTH_SHORT).show();
+                getActivity().finish();
                 return true;
             case R.id.menu_item_delete_note:
+                TrashNoteList.get(getActivity()).addNote(mImageNote);
+                TrashNoteList.get(getActivity()).updateImageNote(mImageNote);
                 NoteList.get(getActivity()).deleteNote(mImageNote);
                 //TODO make Toast a snackbar with undo
                 Toast.makeText(getActivity(), R.string.delete_item_toast, Toast.LENGTH_SHORT).show();

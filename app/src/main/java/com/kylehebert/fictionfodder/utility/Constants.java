@@ -12,6 +12,8 @@ public class Constants {
 
     public static final String ARG_QUERY_TYPE = "com.kylehebert.fictionfodder.query_type";
 
+    public static final String ARG_SEARCH_TERM = "com.kylehebert.fictionfodder.search_term";
+
     public final static String TYPE_IMAGE_NOTE = "imageNote";
 
     public final static String TYPE_TEXT_NOTE = "textNote";
@@ -30,7 +32,7 @@ public class Constants {
 
     public static final int QUERY_IMAGE_NOTES = 2;
 
-    public static final int QUERY_TRASH_NOTES = 3;
+    public static final int QUERY_SEARCH_NOTES = 3;
 
 
 

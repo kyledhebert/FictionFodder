@@ -1,6 +1,6 @@
 package com.kylehebert.fictionfodder.fragment;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +17,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.kylehebert.fictionfodder.R;
+import com.kylehebert.fictionfodder.activity.NoteActivity;
+import com.kylehebert.fictionfodder.model.TrashNoteList;
 import com.kylehebert.fictionfodder.utility.Constants;
 import com.kylehebert.fictionfodder.model.NoteList;
 import com.kylehebert.fictionfodder.model.TextNote;
@@ -35,6 +37,7 @@ public class TextNoteFragment extends Fragment {
     private EditText mTextNoteBodyEditText;
     private Toolbar mToolbar;
 
+
     public static TextNoteFragment newInstance(UUID noteId) {
         Bundle args = new Bundle();
         args.putSerializable(Constants.ARG_NOTE_ID, noteId);
@@ -50,9 +53,9 @@ public class TextNoteFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
         UUID noteId = (UUID) getArguments().getSerializable(Constants.ARG_NOTE_ID);
         mTextNote = NoteList.get(getActivity()).getTextNote(noteId);
-
     }
 
     @Override
@@ -145,9 +148,10 @@ public class TextNoteFragment extends Fragment {
                 getActivity().finish();
                 return true;
             case R.id.menu_item_delete_note:
-                NoteList.get(getActivity()).deleteNote(mTextNote);
                 //TODO make Toast a Snackbar with undo
-                //TODO add deleted notes to the Trash dbtables
+                TrashNoteList.get(getActivity()).addNote(mTextNote);
+                TrashNoteList.get(getActivity()).updateTextNote(mTextNote);
+                NoteList.get(getActivity()).deleteNote(mTextNote);
                 Toast.makeText(getActivity(), R.string.delete_item_toast, Toast.LENGTH_SHORT).show();
                 getActivity().finish();
                 return true;

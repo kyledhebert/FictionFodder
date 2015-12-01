@@ -6,14 +6,20 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.kylehebert.fictionfodder.R;
 import com.kylehebert.fictionfodder.fragment.NoteListFragment;
+import com.kylehebert.fictionfodder.fragment.TrashNoteListFragment;
 import com.kylehebert.fictionfodder.utility.Constants;
 
 /**
@@ -44,6 +50,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
+
         mNavigationDrawer = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
         mDrawerToggle = setUpDrawerToggle();
 
@@ -58,7 +65,7 @@ public class NavigationDrawerActivity extends AppCompatActivity {
         // loads an all notes list by default if the fragment container is empty
         if (getSupportFragmentManager().findFragmentById(R.id.fragment_container) == null) {
             NoteListFragment noteListFragment = NoteListFragment.newInstance(Constants
-                    .QUERY_ALL_NOTES);
+                    .QUERY_ALL_NOTES, null);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.fragment_container, noteListFragment).commit();
         }
@@ -82,34 +89,24 @@ public class NavigationDrawerActivity extends AppCompatActivity {
     private void selectDrawerItem(MenuItem item) {
         // create a new NoteList Fragment based on the item selected
 
-        Fragment fragment = null;
-
-        NoteListFragment noteListFragment;
+        Fragment fragment;
 
         switch (item.getItemId()) {
             case R.id.navigation_all_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES, null);
                 break;
             case R.id.navigation_text_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_TEXT_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_TEXT_NOTES, null);
                 break;
             case R.id.navigation_image_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_IMAGE_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_IMAGE_NOTES, null);
                 break;
             case R.id.navigation_trash_notes:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_TRASH_NOTES);
+                fragment = TrashNoteListFragment.newInstance();
                 break;
             default:
-                noteListFragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES);
+                fragment = NoteListFragment.newInstance(Constants.QUERY_ALL_NOTES, null);
 
-
-
-        }
-
-        try {
-            fragment = noteListFragment;
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         // insert the new fragment and replace any existing fragment
@@ -123,6 +120,43 @@ public class NavigationDrawerActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.activity_navigation_drawer_search_view, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.menu_item_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d("NAV_DRAWER", "Query: " + query);
+                /*
+                query the notes database and create a new NoteListFragment
+                to display the results
+                */
+
+                NoteListFragment noteListFragment = NoteListFragment.newInstance(Constants.QUERY_SEARCH_NOTES,
+                        query);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, noteListFragment).commit();
+
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        return true;
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

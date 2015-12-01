@@ -21,4 +21,23 @@ public class NoteDatabaseSchema {
             public static final String CAPTION = "caption";
         }
     }
+
+    public static final class TrashTable {
+        public static final String NAME = "trash";
+
+        public static final class Columns {
+            public static final String UUID = "uuid";
+            public static final String DATE = "date";
+            public static final String TYPE = "type";
+            public static final String TAG = "tag";
+            public static final String TRASH = "trash";
+            public static final String TITLE = "title";
+            public static final String BODY = "body";
+            public static final String IMG_LOCATION = "img_location";
+            public static final String CAPTION = "caption";
+        }
+
+
+
+    }
 }

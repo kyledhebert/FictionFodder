@@ -11,6 +11,7 @@
         this note</string>
     <string name="save_item_toast">Note saved</string>
     <string name="delete_item_toast">Note deleted</string>
+    <string name="empty_trash_list">The trash is empty</string>
 
     <!-- Navigation Drawer String -->
     <string name="all_notes_label">All Notes</string>
@@ -21,5 +22,7 @@
 
     <string name="drawer_open">Open Navigation Menu</string>
     <string name="drawer_close">Close Navigation Menu</string>
+    <string name="search_notes">Search Notes</string>
+
 
 </resources>
